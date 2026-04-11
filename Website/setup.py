@@ -41,6 +41,7 @@ def run_setup() -> None:
         install_requires = [
             "benjaminhamon-standard-extensions ~= 1.0.1",
             "Flask ~= 3.1.3",
+            "prometheus-flask-exporter ~= 0.23.2",
         ],
 
         extras_require = {
