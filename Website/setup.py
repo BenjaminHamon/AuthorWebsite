@@ -39,6 +39,7 @@ def run_setup() -> None:
         python_requires = "~= 3.11",
 
         install_requires = [
+            "benjaminhamon-standard-extensions ~= 1.0.1",
             "Flask ~= 3.1.3",
         ],
 
