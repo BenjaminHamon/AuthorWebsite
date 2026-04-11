@@ -1,5 +1,3 @@
-<!-- cspell:words pylint pytest venv -->
-
 # Benjamin Hamon's author website
 
 

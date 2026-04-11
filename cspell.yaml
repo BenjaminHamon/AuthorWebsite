@@ -1,20 +1,32 @@
+# cspell:words pycache
+
 ---
 
-# cspell:words pycache venv
+files:
+  - "**"
+  - "**/.*/**"
 
 ignorePaths:
+  - ".git/**"
   - ".venv-automation/**"
   - ".venv/**"
   - "**/__pycache__/**"
+  - "**/.pytest_cache/**"
   - "**/*.egg-info/**"
   - "Artifacts/**"
-  - "Sources/*/build/**"
+
+language: en
 
 words:
+  - asyncio
   - benjaminhamon
   - bhamon
   - hamon
+  - pylint
+  - pytest
+  - venv
 
-enableFiletypes:
-  - jinja-html
-  - toml
+overrides:
+  - filename: "*.html"
+    dictionaries:
+      - html

@@ -1,28 +1,37 @@
 {
-	"$schema": "./schema.json",
+	"$schema": "vscode://schemas/settings/user",
 
 	"files.associations": {
-		"*.html": "jinja-html",
+		"**/templates/**/*.html": "jinja-html",
 	},
 
-	"isort.args": [ "--settings-file", ".isort.cfg" ],
-
 	// For sources
-	"python.defaultInterpreterPath": "${workspaceFolder}/.venv/scripts/python",
+	//// "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+	//// "pylint.interpreter": [ "${workspaceFolder}/.venv/bin/python" ],
 
-	"python.analysis.extraPaths": [
-		"./Sources/website/",
-	],
-
-	// // For automation
-	// "python.defaultInterpreterPath": "${workspaceFolder}/.venv-automation/scripts/python",
-
-	// "python.analysis.extraPaths": [
-	// 	"./Automation/Scripts",
-	// ],
-
-	"python.analysis.typeCheckingMode": "basic",
+	"python.analysis.extraPaths": [ "Sources/website/", "Tests/website/" ],
+	"python.analysis.typeCheckingMode": "standard",
+	"python.analysis.aiCodeActions": {
+		"convertFormatString": false,
+		"generateSymbol": false,
+		"implementAbstractClasses": false,
+	},
 
 	"python.testing.pytestEnabled": true,
-	"python.testing.pytestArgs": [ "-c", "${workspaceFolder}/pytest.ini", "Automation", "Tests" ],
+	"python.testing.pytestArgs": [ "Tests/" ],
+
+	// // For automation
+	// //// "python.defaultInterpreterPath": "${workspaceFolder}/.venv-automation/bin/python",
+	// //// "pylint.interpreter": [ "${workspaceFolder}/.venv-automation/bin/python" ],
+
+	// "python.analysis.extraPaths": [ "Automation/Scripts/", "Automation/Tests/" ],
+	// "python.analysis.typeCheckingMode": "standard",
+	// "python.analysis.aiCodeActions": {
+	// 	"convertFormatString": false,
+	// 	"generateSymbol": false,
+	// 	"implementAbstractClasses": false,
+	// },
+
+	// "python.testing.pytestEnabled": true,
+	// "python.testing.pytestArgs": [ "Automation/Tests/" ],
 }
