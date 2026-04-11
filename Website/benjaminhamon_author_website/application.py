@@ -1,9 +1,8 @@
-# cspell:words werkzeug
-
 import logging
-from typing import Any, Callable, Optional, Tuple
+from typing import Any, Callable, Optional
 
 import flask
+import flask.typing
 import werkzeug.exceptions
 
 from benjaminhamon_author_website import web_helpers
@@ -32,11 +31,14 @@ class Application:
         request_logger.info("(%s) %s %s", flask.request.environ["REMOTE_ADDR"], flask.request.method, flask.request.base_url)
 
 
-    def handle_error(self, exception: Any) -> Tuple[str, int]:
+    def handle_error(self, exception: Any) -> flask.typing.ResponseReturnValue:
         status_code = exception.code if isinstance(exception, werkzeug.exceptions.HTTPException) and exception.code is not None else 500
         status_message = web_helpers.get_http_error_message(status_code)
 
         request_logger.error("(%s) %s %s (StatusCode: %s)",
             flask.request.environ["REMOTE_ADDR"], flask.request.method, flask.request.base_url, status_code, exc_info = True)
+
+        if flask.request.url_rule is not None and flask.request.url_rule.rule == "/metrics":
+            return "", status_code, { "Content-Type": "text/plain" }
 
         return flask.render_template("error.html", title = "Error", message = status_message, status_code = status_code), status_code

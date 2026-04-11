@@ -1,7 +1,8 @@
-# cspell:words levelname werkzeug
+# cspell:words levelname
 
 import argparse
 import logging
+import os
 import sys
 from typing import Optional
 
@@ -19,8 +20,9 @@ def main():
 
     configure_logging(arguments)
 
-    application = application_factory.create_application()
+    application = application_factory.create_application(metrics_token = "metrics")
     website_url = "http://%s:%s/" % (arguments.address, arguments.port)
+    os.environ["DEBUG_METRICS"] = "1" # For Prometheus exporter
 
     logger.info("Website available at '%s'", website_url)
     application.run(address = arguments.address, port = arguments.port, debug = True)
