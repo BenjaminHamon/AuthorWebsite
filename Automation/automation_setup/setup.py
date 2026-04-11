@@ -1,10 +1,14 @@
 import logging
-import os
 import sys
+from pathlib import Path
 
-import automation_helpers
-import python_helpers
-from asyncio_context import AsyncioContext
+sys.path.insert(0, str(Path(__file__ ).parent.parent))
+
+# pylint: disable = wrong-import-position
+from automation_setup import automation_helpers
+from automation_setup import python_helpers
+from automation_setup.asyncio_context import AsyncioContext
+# pylint: enable = wrong-import-position
 
 
 logger = logging.getLogger("Main")
@@ -31,7 +35,7 @@ async def setup_workspace(simulate: bool = False) -> None:
 
     python_system_executable = python_helpers.resolve_system_python_executable()
     venv_python_executable = python_helpers.get_venv_executable(venv_directory, "python")
-    python_package_collection = [ os.path.join("Automation", "Scripts[dev]") ]
+    python_package_collection = [ "./Automation[dev]" ]
 
     logger.info("Setting up python virtual environment for automation (Path: %s)", venv_directory)
     await python_helpers.setup_virtual_environment(python_system_executable, venv_directory, pip_configuration_file_path, simulate = simulate)

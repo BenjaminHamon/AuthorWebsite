@@ -1,13 +1,15 @@
-# cspell:words pyvenv
-
 import logging
-import os
 import sys
+from pathlib import Path
 
-import automation_helpers
-import process_helpers
-import python_helpers
-from asyncio_context import AsyncioContext
+sys.path.insert(0, str(Path(__file__ ).parent.parent))
+
+# pylint: disable = wrong-import-position
+from automation_setup import automation_helpers
+from automation_setup import process_helpers
+from automation_setup import python_helpers
+from automation_setup.asyncio_context import AsyncioContext
+# pylint: enable = wrong-import-position
 
 
 logger = logging.getLogger("Main")
@@ -34,11 +36,11 @@ async def run_checks(simulate: bool = False) -> None:
     pytest_executable = python_helpers.get_venv_executable(venv_directory, "pytest")
 
     logger.info("Running linter")
-    command = [ pylint_executable, "automation_scripts" ]
+    command = [ pylint_executable, "./Automation" ]
     await process_helpers.run_simple_async(logging.getLogger("Python"), command, simulate = simulate)
 
     logger.info("Running tests")
-    command = [ pytest_executable, "--verbose", os.path.join("Automation", "Tests", "automation_scripts_tests") ]
+    command = [ pytest_executable, "--verbose", "./Automation" ]
     await process_helpers.run_simple_async(logging.getLogger("Python"), command, simulate = simulate)
 
 

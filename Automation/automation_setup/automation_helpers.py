@@ -9,7 +9,7 @@ import subprocess
 import sys
 from typing import Generator, Optional
 
-import logging_helpers
+from automation_setup import logging_helpers
 
 
 @contextlib.contextmanager

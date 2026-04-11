@@ -9,7 +9,7 @@
 	//// "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
 	//// "pylint.interpreter": [ "${workspaceFolder}/.venv/bin/python" ],
 
-	"python.analysis.extraPaths": [ "Sources/website/", "Tests/website/" ],
+	"python.analysis.extraPaths": [ "Website/" ],
 	"python.analysis.typeCheckingMode": "standard",
 	"python.analysis.aiCodeActions": {
 		"convertFormatString": false,
@@ -18,13 +18,13 @@
 	},
 
 	"python.testing.pytestEnabled": true,
-	"python.testing.pytestArgs": [ "Tests/" ],
+	"python.testing.pytestArgs": [ "Website/" ],
 
 	// // For automation
 	// //// "python.defaultInterpreterPath": "${workspaceFolder}/.venv-automation/bin/python",
 	// //// "pylint.interpreter": [ "${workspaceFolder}/.venv-automation/bin/python" ],
 
-	// "python.analysis.extraPaths": [ "Automation/Scripts/", "Automation/Tests/" ],
+	// "python.analysis.extraPaths": [ "Automation/" ],
 	// "python.analysis.typeCheckingMode": "standard",
 	// "python.analysis.aiCodeActions": {
 	// 	"convertFormatString": false,
@@ -33,5 +33,5 @@
 	// },
 
 	// "python.testing.pytestEnabled": true,
-	// "python.testing.pytestArgs": [ "Automation/Tests/" ],
+	// "python.testing.pytestArgs": [ "Automation/" ],
 }

@@ -23,8 +23,9 @@ class AsyncioContext:
         old_signal_handlers: List[Tuple[signal.Signals,signal._HANDLER]] = [] # pylint: disable = no-member
 
         if system == "Windows":
-            old_sigbreak_handler = signal.signal(signal.SIGBREAK, lambda signal_number, frame: self.shutdown()) # pylint: disable = no-member
-            old_signal_handlers.append((signal.SIGBREAK, old_sigbreak_handler))
+            sigbreak: signal.Signals = signal.SIGBREAK # pyright: ignore[reportAttributeAccessIssue] # pylint: disable = no-member
+            old_sigbreak_handler = signal.signal(sigbreak, lambda signal_number, frame: self.shutdown())
+            old_signal_handlers.append((sigbreak, old_sigbreak_handler))
 
         old_sigint_handler = signal.signal(signal.SIGINT, lambda signal_number, frame: self.shutdown())
         old_signal_handlers.append((signal.SIGINT, old_sigint_handler))

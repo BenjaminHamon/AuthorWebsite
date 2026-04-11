@@ -62,7 +62,7 @@ class RunWebsiteCommand(AutomationCommand):
 
 
     async def _run_website(self, # pylint: disable = too-many-arguments
-            process_runner: ProcessRunner, python_executable: str, address: str, port: int,
+            process_runner: ProcessRunner, python_executable: str, address: str, port: int, *,
             log_file_path: Optional[str] = None, simulate: bool = False) -> None:
 
         application_module = "benjaminhamon_author_website.run"
