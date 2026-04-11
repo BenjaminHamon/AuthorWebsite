@@ -5,8 +5,9 @@ import logging
 import sys
 from typing import Optional
 
+from benjaminhamon_standard_extensions.logging import logging_helpers
+
 from benjaminhamon_author_website import application_factory
-from benjaminhamon_author_website import logging_helpers
 
 
 logger = logging.getLogger("Main")
@@ -17,7 +18,6 @@ def main():
     arguments = argument_parser.parse_args()
 
     configure_logging(arguments)
-    logging.getLogger("werkzeug").setLevel(logging.WARNING)
 
     application = application_factory.create_application()
     website_url = "http://%s:%s/" % (arguments.address, arguments.port)
@@ -46,7 +46,7 @@ def create_argument_parser() -> argparse.ArgumentParser:
 
 def configure_logging(arguments: argparse.Namespace):
     message_format = "{asctime} [{levelname}][{name}] {message}"
-    date_format = "%Y-%m-%dT%H:%M:%S"
+    date_format = logging_helpers.date_format_iso
 
     log_stream_verbosity: str = "info"
     log_file_path: Optional[str] = None
@@ -70,6 +70,8 @@ def configure_logging(arguments: argparse.Namespace):
     logging_helpers.configure_log_stream(logging.root, sys.stdout, log_stream_verbosity, message_format, date_format)
     if log_file_path is not None:
         logging_helpers.configure_log_file(logging.root, log_file_path, log_file_verbosity, message_format, date_format, mode = "w", encoding = "utf-8")
+
+    logging.getLogger("werkzeug").setLevel(logging.WARNING)
 
 
 if __name__ == "__main__":
