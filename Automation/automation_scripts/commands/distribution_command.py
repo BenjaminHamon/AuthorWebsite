@@ -92,11 +92,10 @@ class _PackageCommand(AutomationCommand):
         logger.info("Building python distribution packages")
         for python_package in automation_configuration.python_development_configuration.package_collection:
             output_directory = os.path.join("Artifacts", "Distributions", python_package.identifier)
-            custom_settings = { "version": automation_configuration.project_metadata.version.full_identifier }
             log_file_path = os.path.join("Artifacts", "Logs", "BuildDistributionPackage_%s.log" % python_package.identifier)
 
-            await python_package_builder.build_distribution_package_with_custom_settings(
-                python_package, output_directory, custom_settings, log_file_path = log_file_path, simulate = simulate)
+            await python_package_builder.build_distribution_package(
+                python_package, output_directory, log_file_path = log_file_path, simulate = simulate)
 
 
 class _UploadCommand(AutomationCommand):
