@@ -21,6 +21,7 @@ words:
   - asyncio
   - benjaminhamon
   - bhamon
+  - gunicorn
   - hamon
   - pylint
   - pytest
