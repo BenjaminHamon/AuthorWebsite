@@ -62,8 +62,8 @@ def load_python_development_configuration() -> PythonDevelopmentConfiguration:
         package_collection = [
             PythonPackage(
                 identifier = "benjaminhamon-author-website",
-                path_to_sources = os.path.join("Sources", "website"),
-                path_to_tests = os.path.join("Tests", "website")),
+                path_to_sources = os.path.join(".", "Website"),
+                path_to_tests = os.path.join(".", "Website")),
         ]
     )
 

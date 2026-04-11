@@ -1,18 +1,19 @@
+# cspell:words pycache
+
 # Artifacts
 /Artifacts/
 
 # Distribution
-/Automation/Scripts/build/
-/Automation/Scripts/dist/
-/Sources/*/build/
-/Sources/*/dist/
-/Sources/*/*/__metadata__.py
+__metadata__.py
 
 # Environment
 /environment.json
 
 # Logs
 *.log
+
+# NodeJS
+node_modules/
 
 # Python
 __pycache__/

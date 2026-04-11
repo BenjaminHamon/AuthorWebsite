@@ -1,12 +1,10 @@
-<!-- cspell:words stylesheet -->
-
 {% import 'macros.html' as shared_macros -%}
 
 <!doctype html>
 <html>
 
     <head>
-        <title>{{ title }} - {{ config['WEBSITE_TITLE'] }}</title>
+        <title>{{ title }} - {{ config['METADATA']['title'] }}</title>
         <meta name="viewport" content="width=device-width"/>
         <link rel="stylesheet" href="{{ url_for('static', filename = 'layout.css') }}"/>
         <link rel="stylesheet" href="{{ url_for('static', filename = 'generic.css') }}"/>
@@ -17,7 +15,7 @@
 
         <header>
             <div class="title">
-                <a href="{{ url_for('main_controller.home') }}"><p>{{ config['WEBSITE_TITLE'] }}</p></a>
+                <a href="{{ url_for('main_controller.home') }}"><p>{{ config['METADATA']['title'] }}</p></a>
             </div>
             <nav>
 				{{ shared_macros.navigation_link('main_controller.home', 'Home', [ 'main_controller.home' ]) }}
@@ -35,17 +33,17 @@
 
         <footer>
             <div>
-                <p>{{ config['WEBSITE_TITLE'] }}</p>
+                <p>{{ config['METADATA']['title'] }}</p>
             </div>
             <div>
                 <a href="https://www.benjaminhamon.com">Portal</a>
-                <a href="{{ config['WEBSITE_SOURCES_URL'] }}">Sources</a>
-                <a href="mailto:{{ config['WEBSITE_CONTACT_EMAIL'] }}">Contact</a>
+                <a href="{{ config['METADATA']['sources_url'] }}">Sources</a>
+                <a href="mailto:{{ config['METADATA']['contact_email'] }}">Contact</a>
             </div>
             <div>
-                {% if config['WEBSITE_VERSION'] %}
-                <p>Version {{ config['WEBSITE_VERSION'] }} ({{ config['WEBSITE_DATE'] }})</p>
-                <p>{{ config['WEBSITE_COPYRIGHT'].replace("(c)", "©") }}</p>
+                {% if config['METADATA']['version'] %}
+                <p>Version {{ config['METADATA']['version'] }} ({{ config['METADATA']['date'] }})</p>
+                <p>{{ config['METADATA']['copyright'].replace("(c)", "©") }}</p>
                 {% else %}
                 <p>Development Version</p>
                 {% endif %}

@@ -1,0 +1,102 @@
+---
+
+name: Development pipeline
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+env:
+  PYTHON_VERSION: "3.11"
+
+
+
+jobs:
+
+  check_for_linux:
+    name: Run checks and tests on Linux
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Checkout sources
+        uses: actions/checkout@v6
+
+      - name: Set up automation
+        run: python Automation/automation_setup/setup.py --verbosity debug
+
+      - name: Check automation
+        run: python Automation/automation_setup/check.py --verbosity debug
+
+      - name: Set up workspace
+        run: .venv-automation/bin/automation --verbosity debug develop
+
+      - name: Run spell checker
+        run: |
+          npm install
+          npx cspell lint --dot .
+
+      - name: Run linter
+        run: .venv-automation/bin/automation --verbosity debug lint
+
+      - name: Run tests
+        run: .venv-automation/bin/automation --verbosity debug test
+
+      - name: Upload results
+        uses: actions/upload-artifact@v6
+        with:
+          name: CheckResults_Linux
+          path: Artifacts
+        if: always()
+
+
+
+  check_for_windows:
+    name: Run checks and tests on Windows
+    runs-on: windows-latest
+
+    steps:
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Checkout sources
+        uses: actions/checkout@v6
+
+      - name: Set up automation
+        run: python Automation/automation_setup/setup.py --verbosity debug
+
+      - name: Check automation
+        run: python Automation/automation_setup/check.py --verbosity debug
+
+      - name: Set up workspace
+        run: .venv-automation/Scripts/automation.exe --verbosity debug develop
+
+      - name: Run spell checker
+        run: |
+          npm install
+          npx cspell lint --dot .
+
+      - name: Run linter
+        run: .venv-automation/Scripts/automation.exe --verbosity debug lint
+
+      - name: Run tests
+        run: .venv-automation/Scripts/automation.exe --verbosity debug test
+
+      - name: Upload results
+        uses: actions/upload-artifact@v6
+        with:
+          name: CheckResults_Windows
+          path: Artifacts
+        if: always()

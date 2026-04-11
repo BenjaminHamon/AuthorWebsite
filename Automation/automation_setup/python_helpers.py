@@ -5,7 +5,7 @@ import shutil
 import sys
 from typing import List, Optional
 
-import process_helpers
+from automation_setup import process_helpers
 
 
 logger = logging.getLogger("Python")

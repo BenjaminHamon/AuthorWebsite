@@ -17,28 +17,27 @@ request_logger = logging.getLogger("Request")
 
 
 def create_application() -> Application:
-    title = "Benjamin Hamon's author website"
-    sources_url = "https://github.com/BenjaminHamon/AuthorWebsite"
-    contact_email = "development@benjaminhamon.com"
-
     flask_application = flask.Flask("benjaminhamon_author_website")
     application = Application(flask_application)
     main_controller = MainController()
 
-    configure(flask_application, title, sources_url, contact_email)
+    configure(flask_application)
     register_handlers(flask_application, application)
     register_routes(flask_application, main_controller)
 
     return application
 
 
-def configure(application: flask.Flask, title: str, sources_url: str, contact_email: str) -> None:
-    application.config["WEBSITE_TITLE"] = title
-    application.config["WEBSITE_COPYRIGHT"] = benjaminhamon_author_website.__copyright__
-    application.config["WEBSITE_VERSION"] = benjaminhamon_author_website.__version__
-    application.config["WEBSITE_DATE"] = benjaminhamon_author_website.__date__
-    application.config["WEBSITE_SOURCES_URL"] = sources_url
-    application.config["WEBSITE_CONTACT_EMAIL"] = contact_email
+def configure(application: flask.Flask) -> None:
+    application.config["METADATA"] = {
+        "title": "Benjamin Hamon's author website",
+        "product": benjaminhamon_author_website.__product__,
+        "copyright": benjaminhamon_author_website.__copyright__,
+        "version": benjaminhamon_author_website.__version__,
+        "date": benjaminhamon_author_website.__date__,
+        "sources_url": "https://github.com/BenjaminHamon/AuthorWebsite",
+        "contact_email": "development@benjaminhamon.com",
+    }
 
     application.jinja_env.undefined = jinja2.StrictUndefined
     application.jinja_env.trim_blocks = True
@@ -69,5 +68,5 @@ def add_url_rule(application: flask.Flask, path: str, methods: List[str], handle
 
 def versioned_url_for(endpoint: str, **values) -> str:
     if endpoint == "static":
-        values["version"] = flask.current_app.config["WEBSITE_VERSION"]
+        values["version"] = flask.current_app.config["METADATA"]["version"]
     return flask.url_for(endpoint, **values)
