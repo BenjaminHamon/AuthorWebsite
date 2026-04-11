@@ -3,6 +3,8 @@ import logging
 from typing import List
 
 from bhamon_development_toolkit.automation.automation_command import AutomationCommand
+from bhamon_development_toolkit.processes import process_helpers
+from bhamon_development_toolkit.processes.executable_command import ExecutableCommand
 from bhamon_development_toolkit.python import python_helpers
 from bhamon_development_toolkit.python.python_environment import PythonEnvironment
 
@@ -39,6 +41,23 @@ class DevelopCommand(AutomationCommand):
         python_environment.setup_virtual_environment(pip_configuration_file_path, simulate = simulate)
         python_environment.install_python_packages_for_development(package_collection_for_pip, simulate = simulate)
 
+        logger.info("Installing playwright")
+        self._install_playwright(python_environment, simulate = simulate)
+
 
     async def run_async(self, arguments: argparse.Namespace, simulate: bool, **kwargs) -> None:
         self.run(arguments, simulate = simulate, **kwargs)
+
+
+    def _install_playwright(self, python_environment: PythonEnvironment, simulate: bool = False) -> None:
+        playwright_executable = python_environment.get_venv_executable("playwright")
+
+        install_command = ExecutableCommand(playwright_executable)
+        install_command.add_arguments([ "install-deps" ])
+
+        process_helpers.run_simple(logger, install_command, simulate = simulate)
+
+        install_command = ExecutableCommand(playwright_executable)
+        install_command.add_arguments([ "install" ])
+
+        process_helpers.run_simple(logger, install_command, simulate = simulate)

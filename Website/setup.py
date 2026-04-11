@@ -50,6 +50,7 @@ def run_setup() -> None:
                 "pytest ~= 9.0.3",
                 "pytest-asyncio ~= 1.3.0",
                 "pytest-json ~= 0.4.0",
+                "pytest-playwright-asyncio ~= 0.7.2",
             ],
         },
 
