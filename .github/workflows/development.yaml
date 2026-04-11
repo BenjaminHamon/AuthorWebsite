@@ -1,3 +1,5 @@
+# cspell:words addopts
+
 ---
 
 name: Development pipeline
@@ -50,6 +52,8 @@ jobs:
 
       - name: Run tests
         run: .venv-automation/bin/automation --verbosity debug test
+        env:
+          PYTEST_ADDOPTS: --browser chromium --browser firefox
 
       - name: Upload results
         uses: actions/upload-artifact@v6
@@ -93,6 +97,8 @@ jobs:
 
       - name: Run tests
         run: .venv-automation/Scripts/automation.exe --verbosity debug test
+        env:
+          PYTEST_ADDOPTS: --browser chromium --browser firefox
 
       - name: Upload results
         uses: actions/upload-artifact@v6
