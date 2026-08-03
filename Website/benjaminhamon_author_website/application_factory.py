@@ -33,9 +33,9 @@ def create_application(metrics_token: str, server: Optional[str] = None) -> Appl
 
 def create_metrics(server: Optional[str] = None) -> PrometheusMetrics:
     if server is None:
-        return PrometheusMetrics(None, metrics_decorator = metrics_authorization)
+        return PrometheusMetrics(None, group_by = "endpoint", metrics_decorator = metrics_authorization)
     if server == "gunicorn":
-        return GunicornInternalPrometheusMetrics(None, metrics_decorator = metrics_authorization)
+        return GunicornInternalPrometheusMetrics(None, group_by = "endpoint", metrics_decorator = metrics_authorization)
     raise ValueError("Unsupported server: '%s'" % server)
 
 
